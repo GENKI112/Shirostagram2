@@ -1,0 +1,12 @@
+@import '~bootstrap/scss/bootstrap';
+
+@import "layouts/navbar";
+
+@import "custom.scss";
+
+@import "users/devise";
+@import "users/show";
+
+@import "users/edit";
+
+@import "posts"

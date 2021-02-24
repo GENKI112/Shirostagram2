@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_023654) do
+ActiveRecord::Schema.define(version: 2021_02_24_101825) do
 
   create_table "comments", force: :cascade do |t|
     t.text "comment", null: false
@@ -20,6 +20,22 @@ ActiveRecord::Schema.define(version: 2021_02_19_023654) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "hashtag_post_images", force: :cascade do |t|
+    t.integer "posts_id", null: false
+    t.integer "hashtag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hashtag_id"], name: "index_hashtag_post_images_on_hashtag_id"
+    t.index ["posts_id"], name: "index_hashtag_post_images_on_posts_id"
+  end
+
+  create_table "hashtags", force: :cascade do |t|
+    t.string "hashname"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hashname"], name: "index_hashtags_on_hashname", unique: true
   end
 
   create_table "likes", force: :cascade do |t|
@@ -64,6 +80,8 @@ ActiveRecord::Schema.define(version: 2021_02_19_023654) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "hashtag_post_images", "hashtags"
+  add_foreign_key "hashtag_post_images", "posts", column: "posts_id"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "photos", "posts"

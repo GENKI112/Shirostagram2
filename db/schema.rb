@@ -85,6 +85,6 @@ ActiveRecord::Schema.define(version: 2021_02_24_152233) do
   add_foreign_key "likes", "users"
   add_foreign_key "photos", "posts"
   add_foreign_key "post_taggings", "hashtags"
-  add_foreign_key "post_taggings", "posts"
+  add_foreign_key "post_taggings", "posts", on_delete: :cascade
   add_foreign_key "posts", "users"
 end

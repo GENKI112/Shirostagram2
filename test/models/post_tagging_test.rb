@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HashtagPostImageTest < ActiveSupport::TestCase
+class PostTaggingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

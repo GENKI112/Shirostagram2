@@ -27,7 +27,9 @@
           </div>
           <div class="m-2">
             <strong>
-              <%= @post.caption %>
+              
+              <%= render_with_hashtags(@post.caption) %>
+              
             </strong>
           </div>
           <div class="comment-post-id">

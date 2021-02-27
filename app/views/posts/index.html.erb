@@ -44,7 +44,7 @@
 
           <div>
             <span><strong><%= post.user.name %></strong></span>
-            <span><%= post.caption %></span>
+            <span><%= render_with_hashtags(post.caption) %></span>
             <%= link_to time_ago_in_words(post.created_at).upcase + "前", post_path(post), class: "post-time no-text-decoration" %>
             
             <div id="comment-post-<%= post.id.to_s %>">

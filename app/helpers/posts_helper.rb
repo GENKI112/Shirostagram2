@@ -1,10 +1,17 @@
 module PostsHelper
   def render_with_hashtags(caption)
-    if caption.match(/[#＃]/)
-      hashtags = caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    hashtags = caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    if hashtags.present?
+      dup_hash = Hash.new{ |word, bottom_point| }
+      hashtags.uniq.each do |word|
+        top_point = caption.index(word)
+        bottom_point = caption.index(word) + word.length - 1
+        dup_hash.store(word, 0)
+      end
       hash_point = hashtags.map do |num|
-        top_point = caption.index(num)
-        bottom_point = caption.index(num) + num.length - 1
+        top_point = caption.index(num, dup_hash[num])
+        bottom_point = caption.index(num, dup_hash[num]) + num.length - 1
+        dup_hash.store(num, bottom_point)
         hash = []
         hash.push(top_point, bottom_point)
       end

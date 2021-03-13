@@ -37,12 +37,8 @@
           <div>
             <span><strong><%= post.user.name %></strong></span>
             <span>
-              <% if post.caption.match(/[#＃]/) %>
-                <% render_with_hashtags(post.caption).each do |word| %>
-                  <%= p word %>
-                <% end %>
-              <% else %>
-                <%= p post.caption %>
+              <% return_an_array(post.caption).each do |word| %>
+                <%= p word %>
               <% end %>
             </span>
             <%= link_to time_ago_in_words(post.created_at).upcase + "前", post_path(post), class: "post-time no-text-decoration" %>

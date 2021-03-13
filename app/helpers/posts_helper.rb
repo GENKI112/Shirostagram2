@@ -1,43 +1,43 @@
 module PostsHelper
-  def render_with_hashtags(caption)
-    hashtags = caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
-    if hashtags.present?
-      dup_hash = Hash.new{ |word, bottom_point| }
-      hashtags.uniq.each do |word|
-        top_point = caption.index(word)
-        bottom_point = caption.index(word) + word.length - 1
-        dup_hash.store(word, 0)
-      end
-      hash_point = hashtags.map do |num|
-        top_point = caption.index(num, dup_hash[num])
-        bottom_point = caption.index(num, dup_hash[num]) + num.length - 1
-        dup_hash.store(num, bottom_point)
-        hash = []
-        hash.push(top_point, bottom_point)
-      end
-      cap_hash = []
-      cap_arr = hash_point.each_with_index do |arr, i|
-        if i == 0
-          front_cap = caption[0...arr[0]]
-          cap_hash.push(front_cap)
+  def return_an_array(caption)
+    hashtags = Post.hashtag_scan(caption)
+    dup_hash = {}
+    hashtags.uniq.each do |word|
+      dup_hash[word] = 0
+    end
+    hash_point = hashtags.map do |num|
+      top_point = caption.index(num, dup_hash[num])
+      bottom_point = caption.index(num, dup_hash[num]) + num.length - 1
+      dup_hash[num] = bottom_point
+      hash_point =  top_point, bottom_point
+    end
+    cap_arr = []
+    hash_point.each_with_index do |arr, i|
+      usually_cap = caption[
+        if cap_arr.empty?
+          0...hash_point[0][0]
         else
-          space_cap = caption[(hash_point[i-1][1] + 1)...hash_point[i][0]]
-          cap_hash.push(space_cap)
+          (hash_point[i-1][1] + 1)...hash_point[i][0]
         end
-        tag = caption[arr[0]..arr[1]]
-        cap_hash.push(tag)
+      ]
+      tag = caption[arr[0]..arr[1]]
+      cap_arr.push(usually_cap, tag)
+    end
+    last_cap = caption[
+      if caption.match(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+        (hash_point.last[1] + 1)..-1
+      else
+        0..-1
       end
-      last_cap = caption[(hash_point.last[1] + 1)..-1]
-      cap_hash.push(last_cap)
-      cap_link = cap_hash.map do |word|
-        if word.match(/[#＃]/)
-          p link_to word, "/post/hashtag/#{word.delete("#")}"
-        else
-          p word
-        end
+    ]
+    cap_arr.push(last_cap)
+    cap_arr.map do |word|
+      if word.match(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+        delete_pound_word = word.delete(word[0])
+        p link_to word, "/post/hashtag/" + delete_pound_word
+      else
+        p word
       end
-    else
-      p caption
     end
   end
 end

@@ -13,13 +13,13 @@ class Post < ApplicationRecord
   def liked_by(user)
     Like.find_by(user_id: user.id, post_id: id)
   end
-
+  
   private
-  def hashtag_scan
+  def self.hashtag_scan(caption)
     caption.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
   end
   def generate_hashtag
-    post_labels = hashtag_scan
+    post_labels = Post.hashtag_scan(caption)
     post_labels.uniq.each do |hashtag|
       self.hashtags << Hashtag.find_or_create_by(label: hashtag.delete('#'))
     end

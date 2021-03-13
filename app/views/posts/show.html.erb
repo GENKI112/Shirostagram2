@@ -25,12 +25,8 @@
           </div>
           <div class="m-2">
             <strong>
-              <% if @post.caption.match(/[#＃]/) %>
-                <% render_with_hashtags(@post.caption).each do |word| %>
-                  <%= p word %>
-                <% end %>
-              <% else %>
-                <%= p @post.caption %>
+              <% return_an_array(@post.caption).each do |word| %>
+                <%= p word %>
               <% end %>
             </strong>
           </div>

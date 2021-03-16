@@ -25,8 +25,8 @@
           </div>
           <div class="m-2">
             <strong>
-              <% return_an_array(@post.caption).each do |word| %>
-                <%= p word %>
+              <% output_array(@post.caption).each do |word| %>
+                <%= word %>
               <% end %>
             </strong>
           </div>

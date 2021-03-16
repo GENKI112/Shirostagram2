@@ -37,8 +37,8 @@
           <div>
             <span><strong><%= post.user.name %></strong></span>
             <span>
-              <% return_an_array(post.caption).each do |word| %>
-                <%= p word %>
+              <% output_array(post.caption).each do |word| %>
+                <%= word %>
               <% end %>
             </span>
             <%= link_to time_ago_in_words(post.created_at).upcase + "前", post_path(post), class: "post-time no-text-decoration" %>

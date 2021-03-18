@@ -37,7 +37,7 @@
           <div>
             <span><strong><%= post.user.name %></strong></span>
             <span>
-              <% output_array(post.caption).each do |word| %>
+              <% caption_and_hashtags_in_array(post.caption).each do |word| %>
                 <%= word %>
               <% end %>
             </span>

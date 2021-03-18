@@ -4,7 +4,6 @@ class Hashtag < ApplicationRecord
   validates :label, presence: true, length: { maximum: 50 }
   LEAD_POUND = "[#＃]"
   HASHTAG_CONDITIONS = %r{#{LEAD_POUND}[\w\p{Han}ぁ-ヶｦ-ﾟー]+}
-  p HASHTAG_CONDITIONS
   def self.hashtag_scan(caption)
     caption.scan(HASHTAG_CONDITIONS)
   end

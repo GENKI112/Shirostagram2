@@ -20,8 +20,7 @@ module PostsHelper
       usually_cap = caption[(hash_point[i-1][1] + 1)...hash_point[(i)][0]]
       cap_arr.push(usually_cap, tag)
     end
-    last_cap = caption[(hash_point.last[1] + 1)..-1]
-    cap_arr.push(last_cap)
+    cap_arr.push(caption[(hash_point.last[1] + 1)..-1])
     cap_arr.map do |word|
       if word.match(Hashtag::HASHTAG_CONDITIONS)
         delete_pound_word = Hashtag.pound_delete_at_hashtag(word)

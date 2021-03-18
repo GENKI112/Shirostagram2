@@ -2,7 +2,7 @@ module PostsHelper
   def caption_and_hashtags_in_array(caption)
     hashtags = Hashtag.hashtag_scan(caption)
     if hashtags.blank?
-      return [caption[0..-1]]
+      return [caption]
     end
     dup_hash = {}
     hashtags.uniq.each do |word|
@@ -14,9 +14,7 @@ module PostsHelper
       dup_hash[num] = bottom_point
       [top_point, bottom_point]
     end
-    cap_arr = []
-    first_cap = caption[0...hash_point[0][0]]
-    cap_arr.push(first_cap)
+    cap_arr = [first_cap = caption[0...hash_point[0][0]]]
     hash_point.each_with_index do |arr, i|
       tag = caption[arr[0]..arr[1]]
       usually_cap = caption[(hash_point[i-1][1] + 1)...hash_point[(i)][0]]

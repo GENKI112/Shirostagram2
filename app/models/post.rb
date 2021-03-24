@@ -10,7 +10,7 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :photos
   after_create :generate_hashtag
 
-  def like_or_nil(user)
+  def like_or_nil_to_post_by(user)
     Like.find_by(user_id: user.id, post_id: id)
   end
   private

@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: %i(create)
+  before_action :searching_post_id, only: %i(create destroy)
 
   def create
     @comment = Comment.new(comment_params)
@@ -11,8 +11,9 @@ class CommentsController < ApplicationController
       flash[:alert] = "コメントの投稿に失敗しました"
     end
   end
+
   def destroy
-    @comment = Comment.find_by(id: params[:id])
+    @comment = Comment.find_by(id: params[:id], user_id: current_user.id)
     @post = @comment.post
     if @comment.destroy
       respond_to :js
@@ -20,11 +21,13 @@ class CommentsController < ApplicationController
       flash[:alert] = "コメントの削除に失敗しました"
     end
   end
+
   private
   def comment_params
-    params.required(:comment).permit(:comment).merge(post_id: @post,user_id: current_user.id)
+    params.required(:comment).permit(:comment).merge(post_id: @post_id,user_id: current_user.id)
   end
-  def set_post
-    @post = params[:post_id]
+
+  def searching_post_id
+    @post_id = params[:post_id]
   end
 end

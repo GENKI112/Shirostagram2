@@ -16,7 +16,7 @@
               title: @post.user.name do %>
               <strong><%= @post.user.name %></strong>
             <% end %>
-            <% if @post.user_id == current_user.id %>
+            <% if Post.only_current_user(@post, current_user) %>
               <%= link_to post_path(@post), method: :delete, class: "ml-auto mx-0 my-auto" do %>
                 <div class="delete-post-icon">
                 </div>
@@ -40,8 +40,9 @@
         </div>
         <div class="row parts">
           <div id="like-icon-post-<%= @post.id.to_s %>">
-            <% if @post.like_or_nil_to_post_by(current_user).present? %>
-              <%= link_to "いいねを取り消す", post_like_path(@post.id, @post.like_or_nil_to_post_by(current_user)), method: :DELETE, remote: true, class: "loved hide-text" %>
+            <% if @post.like_to_post_by(current_user).present? %>
+              <% like_or_nil = @post.like_to_post_by(current_user) %>
+              <%= link_to "いいねを取り消す", post_like_path(@post.id, like_or_nil), method: :DELETE, remote: true, class: "loved hide-text" %>
             <% else %>
               <%= link_to "いいね", post_likes_path(@post), method: :POST, remote: true, class: "love hide-text" %>
             <% end %>

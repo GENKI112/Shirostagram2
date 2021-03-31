@@ -24,10 +24,10 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.required(:comment).permit(:comment).merge(post_id: @post_id,user_id: current_user.id)
+    params.required(:comment).permit(:comment).merge(post_id: @post.id,user_id: current_user.id)
   end
 
   def searching_post_id
-    @post_id = params[:post_id]
+    @post = Post.find_by(id: params[:post_id])
   end
 end

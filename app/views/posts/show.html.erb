@@ -40,9 +40,9 @@
         </div>
         <div class="row parts">
           <div id="like-icon-post-<%= @post.id.to_s %>">
-            <% if @post.like_to_post_by(current_user).present? %>
-              <% like_or_nil = @post.like_to_post_by(current_user) %>
-              <%= link_to "いいねを取り消す", post_like_path(@post.id, like_or_nil), method: :DELETE, remote: true, class: "loved hide-text" %>
+            <% like = @post.like_to_post_by(current_user) %>
+            <% if like.present? %>
+              <%= link_to "いいねを取り消す", post_like_path(@post.id, like), method: :DELETE, remote: true, class: "loved hide-text" %>
             <% else %>
               <%= link_to "いいね", post_likes_path(@post), method: :POST, remote: true, class: "love hide-text" %>
             <% end %>

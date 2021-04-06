@@ -57,5 +57,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'carrierwave', '~> 2.0'
 gem "mini_magick"
-gem 'pg', group: :production
-gem 'fog-aws', group: :production
+
+group :production do
+  gem 'pg'
+  gem 'fog-aws'
+end

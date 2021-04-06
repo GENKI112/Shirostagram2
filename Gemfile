@@ -58,4 +58,4 @@ gem 'devise'
 gem 'carrierwave', '~> 2.0'
 gem "mini_magick"
 gem 'pg', group: :production
-gem "fog-aws"
+gem 'fog-aws'

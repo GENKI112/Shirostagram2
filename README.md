@@ -18,6 +18,19 @@
   * turbolinks 5.2.0
 * Amazon S3
 
+## デプロイ
+production環境は下記のURLからご覧いただけます。
+<br>
+<br>
+https://shirostagram.herokuapp.com/
+<br>
+<br>
+Guestユーザーも作成しておりますので、ぜひログインして機能をお試しください。
+* ログインメールアドレス
+  * test@example.com
+* パスワード
+  * 1234567
+
 
 **このアプリケーションは現在(2021/4/5)ベータ版です。今後機能やビューを充実させていきます。**
 

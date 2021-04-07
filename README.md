@@ -12,6 +12,9 @@
 * Ruby on Rails 6.1.1
 * SQLite3 1.4
 * Puma
+* devise
+* mini_magic
+* carrierwave
 * Bootstrap 4.6.0
   * jQuery 3.5.1
   * popper.js 1.16.1

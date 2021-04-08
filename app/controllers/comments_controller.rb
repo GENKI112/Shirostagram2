@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :searching_post_id, only: %i(create destroy)
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @post.comments.build(comment_params)
     @post = @comment.post
     if @comment.save
       respond_to :js
@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find_by(id: params[:id], user_id: current_user.id)
+    @comment = @post.comments.find_by(user_id: current_user.id)
     @post = @comment.post
     if @comment.destroy
       respond_to :js
@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.required(:comment).permit(:comment).merge(post_id: @post.id,user_id: current_user.id)
+    params.required(:comment).permit(:comment).merge(user_id: current_user.id)
   end
 
   def searching_post_id

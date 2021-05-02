@@ -1,3 +1,4 @@
+<h2 class="text-center text-secondary mt-5"><%= "#" + @label %>のタグを含む投稿一覧</h2>
 <% @posts.each do |post| %>
   <div class="col-md-8 col-md-2 mx-auto">
     <div class="card-wrap">
@@ -33,7 +34,7 @@
             <%= link_to "", "#", class: "comment" %>
           </div>
           <div id="like-text-post-<%= post.id.to_s %>">
-            <%= render "like_text", { likes: post.likes } %>
+            <%= render "posts/like_text", { likes: post.likes } %>
           </div>
           <div>
             <span><strong><%= post.user.name %></strong></span>
@@ -43,15 +44,13 @@
               <% end %>
             </span>
             <div id="comment-post-<%= post.id.to_s %>">
-              <%= render 'comment_list', { post: post } %>
+              <%= render 'posts/comment_list', { post: post } %>
             </div>
             <%= link_to time_ago_in_words(post.created_at).upcase + "前", post_path(post),
               class: "light-color post-time no-text-decoration" %>
             <hr>
             <div class="row actions" id="comment-form-post-<%= post.id.to_s %>">
               <%= form_with model: [post, Comment.new], local: false, class: "w-100" do |f| %>
-                <%= f.hidden_field :user_id, value: current_user.id %>
-                <%= f.hidden_field :post_id, value: post.id %>
                 <%= f.text_field :comment, class: "form-control comment-input border-0", placeholder: "コメント ...", autocomplete: :off %>
               <% end %>
             </div>

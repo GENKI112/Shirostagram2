@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :searching_post_id, only: %i(create destroy)
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @post.comments.build(comment_params)
     @post = @comment.post
     if @comment.save
       respond_to :js
@@ -12,7 +13,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find_by(id: params[:id])
+    @comment = @post.comments.find_by(user_id: current_user.id)
     @post = @comment.post
     if @comment.destroy
       respond_to :js
@@ -22,7 +23,11 @@ class CommentsController < ApplicationController
   end
 
   private
-    def comment_params
-      params.required(:comment).permit(:user_id, :post_id, :comment)
-    end
+  def comment_params
+    params.required(:comment).permit(:comment).merge(user_id: current_user.id)
+  end
+
+  def searching_post_id
+    @post = Post.find_by(id: params[:post_id])
+  end
 end
